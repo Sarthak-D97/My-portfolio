@@ -106,6 +106,7 @@ function NavBar() {
               <Button
                 href="https://github.com/Darkshadow-ssh/My-portfolio"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="fork-btn-inner"
               >
                 <CgGitFork style={{ fontSize: "1.2em" }} />{" "}
