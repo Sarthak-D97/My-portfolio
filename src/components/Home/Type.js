@@ -8,7 +8,6 @@ function Type() {
         strings: [
           "Founding Engineer",
           "Full-Stack Developer",
-          "DevOps Engineer",
           "SaaS Founder",
         ],
         autoStart: true,
