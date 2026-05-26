@@ -19,19 +19,29 @@ function Home2() {
               LET ME <span className="purple"> INTRODUCE </span> MYSELF
             </h1>
             <p className="home-about-body">
-              I fell in love with programming and I have at least learnt
-              something, I think… 🤷‍♂️
+              I am a product-driven Full-Stack Engineer who thrives on turning complex concepts into robust, production-ready applications. I build with a focus on clean architecture, performance, and security.
               <br />
-              <br />I am fluent in classics like
+              <br />
+              I am highly proficient in core engineering languages like 
               <i>
-                <b className="purple"> C++, Javascript and Rust </b>
+                <b className="purple"> JavaScript/TypeScript, Go, and C++. </b>
               </i>
-                  A cybersecurity expert, system admin, and network admin with a knack for solving challenges and ensuring systems run smoothly. I am very <strong>passionate about securing and optimizing IT infrastructure</strong>, whether it's protecting data or enhancing network performance.<br/><br/>
-                   Usually, I find myself tackling complex problems and collaborating with talented individuals on impactful projects. But every now and then, I dive into <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer"><strong><i><b className="purple">cybersecurity challenges</b></i></strong></a> to sharpen my skills and stay in the flow state. You can explore my activities on TryHackMe <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer"><strong><i><b className="purple">here</b></i></strong></a>.<br/><br/>
-                   <strong>Additionally,</strong> I have a strong foundation in data structures and algorithms (DSA) using C++, coupled with   proficiency in Linux systems. I possess working knowledge of modern web technologies such as React JS, MongoDB, and SQL, along with a basic understanding of Rust. My skill set enables me to approach problems with versatility and efficiency, making me adaptable to various technical domains.
               <br />
               <br />
-              
+              With an academic and practical background in cybersecurity, I approach development with a unique <strong>security-first mindset</strong>. Whether I am architecting multi-tenant SaaS backends, setting up automated CI/CD pipelines, or optimizing frontend state, I ensure systems are both high-performing and deeply resilient.
+              <br />
+              <br />
+              My favorite domain is the intersection of rapid product development and systems infrastructure. I routinely build applications utilizing modern ecosystems like <i><b className="purple">React, Next.js, NestJS, and MongoDB</b></i>, backed by containerization and cloud orchestration tools to maintain absolute operational agility.
+              <br />
+              <br />
+              When I'm looking to sharpen my system-level thinking or step into a high-intensity flow state, I dive into 
+              <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer">
+                <strong><i><b className="purple"> cybersecurity challenges</b></i></strong>
+              </a> 
+              where I am currently ranked in the global <strong>Top 2%</strong>. You can check out my security profile 
+              <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer">
+                <strong><i><b className="purple"> here</b></i></strong>
+              </a>.
             </p>
           </Col>
           <Col md={4} className="myAvtar">
@@ -49,7 +59,7 @@ function Home2() {
             <ul className="home-about-social-links">
               <li className="social-icons">
                 <a
-                  href="https://github.com/Darkshadow-ssh"
+                  href="https://github.com/Sarthak-D97"
                   target="_blank"
                   rel="noreferrer"
                   className="icon-colour  home-social-icons"

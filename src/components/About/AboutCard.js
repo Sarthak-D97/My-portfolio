@@ -13,13 +13,13 @@ function AboutCard() {
         <blockquote className="blockquote mb-0">
           <p style={{ textAlign: "justify" }}>
             Hi Everyone, I am <span className="purple">Sarthak Chauhan </span>
-            from <span className="purple"> Roorkee, India.</span>
+            from <span className="purple"> Roorkee, India</span>, currently based in <span className="purple">Bangalore</span>.
             <br />
-            I am currently employed as a Technology Trainee at Physics Wallah IOI, Bangalore.
+            I am working as a <span className="purple">Frontend Engineer Intern at Physics Wallah</span>, crafting high-performance, scalable web architectures.
             <br />
-            I have completed BCA hons. in Cybersecurity at Lovely Professional University, Phagwara.
+            I hold a BCA (Hons.) in Cybersecurity from Lovely Professional University.
             <br />
-            I have successfully completed CompTIA Network+ and CompTIA Security+ Certification.
+            To bridge the gap between development and robust infrastructure, I have completed my CompTIA Network+ and CompTIA Security+ certifications.
             <br />
             {/* ✅ Images inserted here */}
             <img
@@ -34,22 +34,22 @@ function AboutCard() {
             />
             <br />
             <br />
-            Apart from coding, some other activities that I love to do!
+            Apart from writing clean, performant code, here are a few things I love to do:
           </p>
           <ul>
             <li className="about-activity">
-              <ImPointRight /> Playing CTF Challenges
+              <ImPointRight /> Building full-stack SaaS products & experimenting with DevOps pipelines
             </li>
             <li className="about-activity">
-              <ImPointRight /> Solving Complex Data Structure Problems
+              <ImPointRight /> Cracking CTF challenges and analyzing software vulnerabilities
             </li>
             <li className="about-activity">
-              <ImPointRight /> Travelling
+              <ImPointRight /> Weight training, intense cardio sessions, and immersive gaming
             </li>
           </ul>
 
           <p style={{ color: "rgb(155 126 172)" }}>
-            "Strive to build things that make a difference!"{" "}
+            "Strive to build things that scale gracefully and fail securely!"{" "}
           </p>
           <footer className="blockquote-footer">Sarthak</footer>
         </blockquote>

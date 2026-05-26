@@ -24,8 +24,8 @@ function Projects() {
               isBlog={false}
               title="NewsApp"
               description="This is a sleek and intuitive web application built with React, designed to keep you up-to-date with the latest news headlines from around the world. Whether you're interested in global affairs, technology updates, or entertainment gossip, this app provides a seamless way to access current events at your fingertips."
-              ghLink="https://github.com/Darkshadow-ssh/My-News-App-React"
-              demoLink="https://my-news-app-react-e9f6qmtc6-sarthak-chauhans-projects-9150ae34.vercel.app/"
+              ghLink="https://github.com/Sarthak-D97/My-News-App-React"
+              demoLink="https://newswallah2.vercel.app/"
             />
           </Col>
 
@@ -35,8 +35,8 @@ function Projects() {
               isBlog={false}
               title="TNV(The Nereus Villa) Hotel Website"
               description="I have created an elegant, responsive website that showcases The Nereus Villa's unique offerings, including luxury accommodations, gourmet dining, and exceptional amenities."
-              ghLink="https://github.com/Darkshadow-ssh/The_neures_villa_hotel"
-              demoLink="https://darkshadow-ssh.github.io/The_neures_villa_hotel/"
+              ghLink="https://github.com/Sarthak-D97/The_neures_villa_hotel"
+              demoLink="https://sarthak-d97.github.io/The_neures_villa_hotel/"
             />
           </Col>
 
@@ -46,7 +46,7 @@ function Projects() {
               isBlog={false}
               title="Profile Site"
               description="Personal profile website showcasing my portfolio, skills, and projects. The site includes detailed sections about my technical expertise, educational background, and professional experience. Features an interactive UI with smooth navigation, responsive design, and a dark mode toggle for better user experience.  Integrated contact form for easy communication, with backend support for email notifications."
-              ghLink="https://github.com/Darkshadow-ssh/Sarthak_Profile"
+              ghLink="https://github.com/Sarthak-D97/Sarthak_Profile"
               demoLink="https://sarthak-profile.vercel.app/"              
             />
           </Col>
