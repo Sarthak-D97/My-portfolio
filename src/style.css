@@ -155,8 +155,19 @@ button:focus {
 }
 
 .logo {
-  height: 1.4em !important;
-  width: 2.5em !important;
+  height: auto !important;
+  width: auto !important;
+  /* allow the logo to render at its natural size but constrain to reasonable max dimensions */
+  max-height: 64px !important;
+  max-width: 220px !important;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .logo {
+    max-height: 48px !important;
+    max-width: 160px !important;
+  }
 }
 
 .navbar-nav .nav-link {
