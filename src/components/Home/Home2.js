@@ -19,26 +19,26 @@ function Home2() {
               LET ME <span className="purple"> INTRODUCE </span> MYSELF
             </h1>
             <p className="home-about-body">
-              I am a product-driven Full-Stack Engineer who thrives on turning complex concepts into robust, production-ready applications. I build with a focus on clean architecture, performance, and security.
+              I am a product-focused Founding Engineer and SaaS Founder who thrives on taking complex platforms from inception to production scale. I bridge the gap between high-velocity product execution and rigorous system engineering.
               <br />
               <br />
-              I am highly proficient in core engineering languages like 
+              My core technical weapons include languages like 
               <i>
                 <b className="purple"> JavaScript/TypeScript, Go, and C++. </b>
               </i>
               <br />
               <br />
-              With an academic and practical background in cybersecurity, I approach development with a unique <strong>security-first mindset</strong>. Whether I am architecting multi-tenant SaaS backends, setting up automated CI/CD pipelines, or optimizing frontend state, I ensure systems are both high-performing and deeply resilient.
+              As a <style type="text/css"></style><strong>Founding Engineer at PW LeapX</strong> and the <strong>Founder of Lireons</strong> (a comprehensive multi-tenant School ERP SaaS), I spend my days dealing with heavy architectural responsibilities. This ranges from building robust full-stack platforms using <i><b className="purple">Next.js, NestJS, and MongoDB/PostgreSQL</b></i> to orchestrating infrastructure-as-code deployments via <i><b className="purple">Terraform and AWS</b></i>.
               <br />
               <br />
-              My favorite domain is the intersection of rapid product development and systems infrastructure. I routinely build applications utilizing modern ecosystems like <i><b className="purple">React, Next.js, NestJS, and MongoDB</b></i>, backed by containerization and cloud orchestration tools to maintain absolute operational agility.
+              With a formal background in cybersecurity, I treat security not as an afterthought, but as a core architectural tier. I ensure every line of code is resilient to vulnerabilities, and every CI/CD pipeline is hardened.
               <br />
               <br />
-              When I'm looking to sharpen my system-level thinking or step into a high-intensity flow state, I dive into 
+              When I need to step out of product development and into an intense, pure problem-solving flow state, I tackle advanced offensive and defensive scenarios on 
               <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer">
                 <strong><i><b className="purple"> cybersecurity challenges</b></i></strong>
               </a> 
-              where I am currently ranked in the global <strong>Top 2%</strong>. You can check out my security profile 
+              where I maintain a global rank in the <strong>Top 2%</strong>. You can view my progress 
               <a href="https://tryhackme.com/r/p/snowstormdevilis" target="_blank" rel="noopener noreferrer">
                 <strong><i><b className="purple"> here</b></i></strong>
               </a>.
