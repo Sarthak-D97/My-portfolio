@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+/* Class-based dark mode. A blocking inline script in <head> sets <html class="dark|light">
+   from localStorage or prefers-color-scheme before first paint. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   1. Palette. Light is the :root default; .dark overrides.
+      bg = page ground, fg = text, border = hairlines and rules.
+      Verified contrast (WCAG AA):
+      light: fg/bg 16.7:1, muted/bg 6.0:1, accent/bg 5.8:1, accent-2/bg 5.6:1
+      dark:  fg/bg 17.3:1, muted/bg 7.6:1, accent/bg 9.0:1, accent-2/bg 9.9:1
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --border: #dcd8cf;
+  --border-strong: #b5b0a5;
+  --fg: #141412;
+  --muted: #5f5c55;
+  --accent: #0b6b6a;
+  --accent-fg: #ffffff;
+  --accent-2: #276e45;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0b0b0a;
+  --surface: #141413;
+  --border: #262624;
+  --border-strong: #3d3d39;
+  --fg: #f2f0eb;
+  --muted: #a3a099;
+  --accent: #3fc1be;
+  --accent-fg: #0b0b0a;
+  --accent-2: #6fcb86;
+  color-scheme: dark;
+}
+
+/* No-JS fallback: follow the OS when no theme class was set. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --bg: #0b0b0a;
+    --surface: #141413;
+    --border: #262624;
+    --border-strong: #3d3d39;
+    --fg: #f2f0eb;
+    --muted: #a3a099;
+    --accent: #3fc1be;
+    --accent-fg: #0b0b0a;
+    --accent-2: #6fcb86;
+    color-scheme: dark;
+  }
+}
+
+/* Lireons plate: the brand's own tokens in BOTH themes. Because @theme inline utilities
+   read these variables at runtime, every bg-bg / text-fg / border-border / text-accent
+   utility inside the plate re-themes on its own.
+   Contrast on #020617: fg 17.9:1, muted 8.9:1, accent 6.6:1, accent-2 6.6:1 */
+.plate-lireons {
+  --bg: #020617;
+  --surface: #0b1220;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --fg: #ecf3f1;
+  --muted: #9fb0ac;
+  --accent: #22b8bd;
+  --accent-fg: #020617;
+  --accent-2: #4fc27d;
+  color-scheme: dark;
+}
+
+/* The only looping animation on the site: the 8px status dot (one per live status). */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ------------------------------------------------------------------
+   2. Tailwind v4 theme. `inline` so utilities emit var() references and
+      follow the .dark / .plate-lireons scopes at runtime.
+   ------------------------------------------------------------------ */
+@theme inline {
+  /* Colours: wipe the default palette so only tokens exist. */
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-2: var(--accent-2);
+
+  /* Fonts: variables are set by next/font in app/layout.tsx */
+  --font-serif: var(--font-instrument-serif), "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Fluid type scale: clamp only, no breakpoint jumps. */
+  --text-display-xl: clamp(2.75rem, 1.4rem + 5.8vw, 7rem);
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -0.015em;
+  --text-display-lg: clamp(2.25rem, 1.4rem + 3vw, 4.5rem);
+  --text-display-lg--line-height: 1.02;
+  --text-display-lg--letter-spacing: -0.01em;
+  --text-display-md: clamp(1.625rem, 1.2rem + 1.2vw, 2.5rem);
+  --text-display-md--line-height: 1.1;
+  --text-lede: clamp(1.375rem, 1.1rem + 1.1vw, 2rem);
+  --text-lede--line-height: 1.3;
+  --text-metric: clamp(2.75rem, 1.5rem + 3.5vw, 4.75rem);
+  --text-metric--line-height: 1;
+  --text-ghost: clamp(5rem, 14vw, 13rem);
+  --text-ghost--line-height: 1;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-body-sm: 0.9375rem;
+  --text-body-sm--line-height: 1.55;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.5;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.12em;
+
+  /* Shape: the only radius on the site is the 2px button corner (and the round status dot). */
+  --radius-*: initial;
+  --radius-btn: 2px;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  /* Layout */
+  --spacing-section: clamp(5rem, 10vw, 10rem);
+  --spacing-nav: 3.5rem;
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------
+   3. Base
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    /* Instrument Serif ships one weight: never let the browser fake bold. */
+    font-synthesis: none;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  body {
+    min-height: 100svh;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  strong, b { font-weight: 600; }
+  img, video { max-width: 100%; height: auto; }
+  ::selection { background: var(--accent); color: var(--accent-fg); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+}
+
+/* ------------------------------------------------------------------
+   4. Small component classes used on every section
+   ------------------------------------------------------------------ */
+@layer components {
+  /* Display sizes always carry the serif, whatever element they sit on (h1–h3 get it from base). */
+  .text-display-xl, .text-display-lg, .text-display-md, .text-lede, .text-metric {
+    font-family: var(--font-serif);
+  }
+  /* Mono label: 12px uppercase, tracking .12em (running heads, captions, nav). */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  /* Mono meta: 13px, normal case (dates, stacks, dossier values, footer). */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  /* The one italic accent word inside a serif headline. */
+  .em-accent {
+    font-style: italic;
+    color: var(--accent);
+  }
+  /* Full-width 1px rule in the border token. */
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: var(--border);
+  }
+  /* Decorative section numeral. Always aria-hidden, never real content. */
+  .ghost {
+    position: absolute;
+    font-family: var(--font-serif);
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: 1;
+    color: var(--border);
+    user-select: none;
+    pointer-events: none;
+  }
+  /* Ink underline: 1px line that thickens to 2px on hover. Never colour-only. */
+  .link-ink {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    padding-bottom: 2px;
+    transition: background-size 200ms ease, color 200ms ease;
+  }
+  .link-ink:hover,
+  .link-ink:focus-visible {
+    background-size: 100% 2px;
+    color: var(--accent);
+  }
+  /* Status dot: 8px, always followed by a text label. */
+  .dot {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 9999px;
+    background: var(--accent-2);
+    flex: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .dot-live { animation: pulse-dot 2s ease-in-out infinite; }
+  }
+  /* Portrait: grayscale only where hover exists; colour by default on touch. */
+  .portrait { transition: filter 400ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .portrait { filter: grayscale(1) contrast(1.05); }
+    .portrait:hover,
+    a:hover .portrait,
+    a:focus-visible .portrait,
+    .portrait-group:hover .portrait { filter: none; }
+  }
+  /* Tabular numerals wherever numbers align (sans/mono only; the serif has none). */
+  .tnum { font-variant-numeric: tabular-nums; }
+}
+
+/* ------------------------------------------------------------------
+   5. Motion. CSS-driven so the server HTML is complete and visible
+      without JavaScript, and the hero paints immediately.
+   ------------------------------------------------------------------ */
+@keyframes line-up {
+  from { transform: translateY(110%); }
+  to { transform: none; }
+}
+@keyframes fade-up {
+  /* 0.01 rather than 0 so the element still counts as an LCP candidate at first paint. */
+  from { opacity: 0.01; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0.01; }
+  to { opacity: 1; }
+}
+
+/* Hero mount reveal: each element sets --d (delay). */
+.hero-line { animation: line-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0s); will-change: transform; }
+.hero-fade { animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0s); }
+.hero-fade-in { animation: fade-in 0.8s ease both; animation-delay: var(--d, 0s); }
+
+/* Scroll reveal: hidden only after hydration (<RevealObserver /> adds .js once elements already in
+   view are marked), revealed by an IntersectionObserver that sets data-in. Without JS, or before it
+   runs, everything is visible. background-color is included so row hover tints keep their easing. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+  transition-delay: var(--d, 0s), var(--d, 0s), 0s;
+}
+.js [data-reveal][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line, .hero-fade, .hero-fade-in { animation: fade-in 0.2s ease both; animation-delay: 0s; will-change: auto; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Print everything, whether or not it was scrolled into view. */
+@media print {
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .hero-line, .hero-fade, .hero-fade-in { animation: none; opacity: 1; transform: none; will-change: auto; }
+}

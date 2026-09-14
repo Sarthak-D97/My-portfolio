@@ -1,72 +1,50 @@
-<h2 align="center">
-  MY-PORTFOLIO<br/>
-  <a href="#" target="_blank">Sarthak Chauhan</a>
-</h2>
-<div align="center">
-  <img alt="Demo" src="#" />
-</div>
+# sarthakchauhan.in
 
-<br/>
+Personal site of **Sarthak Chauhan** — Lead Full Stack Engineer at Physics Wallah IOI LeapX and founder of [Lireons](https://lireons.com).
 
-<center>
+Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4 and Motion. Fully static, no backend.
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
-![GitHub Repo stars](https://img.shields.io/github/stars/Darkshadow-ssh/my-portfolio?color=red&logo=github&style=for-the-badge) &nbsp;
-![GitHub forks](https://img.shields.io/github/forks/Darkshadow-ssh/my-portfolio?color=red&logo=github&style=for-the-badge)
+## Run locally
 
-</center>
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-<h3 align="center">
-    🔹
-    <a href="https://github.com/Darkshadow-ssh/my-portfolio/issues">Report Bug</a> &nbsp; &nbsp;
-    🔹
-    <a href="https://github.com/Darkshadow-ssh/my-portfolio/issues">Request Feature</a>
-</h3>
+```bash
+npm run build && npm start   # production build
+npm run lint
+npm run typecheck
+```
 
-## TL;DR
+## Editing content
 
-You can fork this repo to modify and make changes of your own. Please give me proper credit by linking back to [Sarthak](https://github.com/Darkshadow-ssh/my-portfolio). Thanks!
+Every word, link, date and figure on the page lives in one file: `src/data/profile.ts`.
+Sections read from it; nothing is hard-coded in components.
 
-## Built With
+| What | Where |
+| --- | --- |
+| Name, role, email, links, availability | `site`, `socials` |
+| Hero headline, subheadline, dossier | `hero` |
+| Proof-strip figures and their provenance | `proof` |
+| About lede, paragraphs, marginalia | `about` |
+| Roles (dates, bullets, stack) | `experience` |
+| Lireons case study (spec sheet, chapters, system map) | `lireons` |
+| Project index and footnote | `projects`, `projectFootnote` |
+| Stack tiers | `stack` |
+| Certifications, TryHackMe, courses, education | `certifications`, `tryhackme`, `courses`, `education` |
+| Contact | `contact` |
 
-My personal portfolio <a href="#" target="_blank">Sarthak Chauhan</a> which features some of my github projects as well as my resume and technical skills.<br/>
+Assets live in `public/`: `images/sarthak.jpg` (headshot), `images/lireons-logo.png`, `badges/*.png`, `projects/lireons.jpg` (a real 2:1 crop of the live landing page; update `lireons.screenshotCaptured` in the data file when you refresh it) and `Sarthak_Chauhan_Resume.pdf`.
 
-This project was built using these technologies.
+Fonts for the generated Open Graph image live in `src/assets/fonts/` (TTF, read at build time).
 
-- React.js
-- Node.js
-- Express.js
-- CSS3
-- VsCode
-- Vercel
+## Design system
 
-## Features
+Tokens are defined once in `src/app/globals.css` (`:root` light, `.dark`, and `.plate-lireons` for the founder case-study plate, which keeps Lireons' own brand colours in both themes). Type is fluid via `clamp()`; the only radius on the site is the 2px button corner. Theme preference is applied by a blocking inline script before first paint and toggled from the nav.
 
-**📖 Multi-Page Layout**
+The Open Graph image (`/opengraph-image`) and favicon (`/icon`) are generated at build time from the same content file.
 
-**🎨 Styled with React-Bootstrap and Css with easy to customize colors**
+## Deploy
 
-**📱 Fully Responsive**
-
-## Getting Started
-
-Clone down this repository. You will need `node.js` and `git` installed globally on your machine.
-
-## 🛠 Installation and Setup Instructions
-
-1. Installation: `npm install`
-
-2. In the project directory, you can run: `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-The page will reload if you make edits.
-
-## Usage Instructions
-
-Open the project folder and Navigate to `/src/components/`. <br/>
-You will find all the components used and you can edit your information accordingly.
-
-
+Static output — deploys as-is to Vercel (import the repo, no environment variables needed). The footer shows the short commit SHA from `VERCEL_GIT_COMMIT_SHA` (or `git rev-parse` locally).
