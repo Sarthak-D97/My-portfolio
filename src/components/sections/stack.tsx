@@ -16,12 +16,14 @@ function DepthMeter({ depth }: { depth: 1 | 2 | 3 }) {
 export function Stack() {
   return (
     <Section id="stack" index="06" label="Stack" note="By depth, not by logo count">
-      <SectionTitle id="stack" lead="Tools, by how often I" accent="reach" trail="for them." className="lg:max-w-[20ch]" />
-      <p className="sr-only">Listed by depth: Core is used in production every week, Proficient means shipped with and comfortable owning, Working means used in real systems and still deepening.</p>
+      <SectionTitle id="stack">Tools, by how often I reach for them.</SectionTitle>
+      <p className="sr-only">
+        Listed by depth: Core is used in production every week, Proficient means shipped with and comfortable owning, Working means used in real systems and still deepening.
+      </p>
 
-      <div className="mt-10 grid gap-10 sm:mt-14 lg:grid-cols-3 lg:gap-0">
+      <Reveal as="div" className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-3 lg:gap-0" stagger={0.1}>
         {stack.map((tier, i) => (
-          <div key={tier.tier} className={cn(i > 0 && "lg:border-l lg:border-border lg:pl-8")}>
+          <RevealItem key={tier.tier} className={cn("rule-draw", i > 0 && "lg:pl-8")}>
             <div className="flex items-center justify-between border-b border-border pb-3">
               <h3 className="label text-fg">{tier.tier}</h3>
               <span className="meta inline-flex items-center gap-3 text-muted">
@@ -29,19 +31,21 @@ export function Stack() {
                 <span className="tnum">{tier.items.length}</span>
               </span>
             </div>
-            <p className="py-3 text-body-sm text-muted">{tier.definition}</p>
-            <Reveal as="ul" stagger={0.03}>
-              {tier.items.map((item) => (
-                <RevealItem as="li" key={item} className="border-b border-border py-3 text-body font-medium text-fg">
-                  {item}
-                </RevealItem>
+            <p className="meta pt-3 text-muted">{tier.definition}</p>
+            {/* An inline run, not a ledger: tags do not deserve a row each. */}
+            <p className="mt-4 text-body leading-[1.9] text-fg">
+              {tier.items.map((item, j) => (
+                <span key={item}>
+                  <span className="font-medium">{item}</span>
+                  {j < tier.items.length - 1 ? <span className="font-mono text-muted"> · </span> : null}
+                </span>
               ))}
-            </Reveal>
-          </div>
+            </p>
+          </RevealItem>
         ))}
-      </div>
+      </Reveal>
 
-      <p className="meta mt-8 text-muted">{dots(securityLine)}</p>
+      <p className="meta mt-10 border-t border-border pt-5 text-muted">{dots(securityLine)}</p>
     </Section>
   );
 }

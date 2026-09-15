@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowDownToLine } from "lucide-react";
+import { LayoutGroup, motion } from "motion/react";
 import { nav, sections, site } from "@/data/profile";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const ids = sections.map((s) => s.id);
+const desktopNav = nav.filter((n) => ["About", "Experience", "Lireons", "Projects", "Contact"].includes(n.label));
 
 /** The section whose top is above 40% of the viewport, or the last one when the page is scrolled to the end. */
 function activeSection(): string {
@@ -89,31 +91,36 @@ export function Nav() {
         </div>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul role="list" className="flex items-center gap-5 xl:gap-7">
-            {nav.map((item) => {
+          <LayoutGroup id="nav">
+          <ul role="list" className="flex items-center gap-7 xl:gap-8">
+            {desktopNav.map((item) => {
               const id = item.href.slice(1);
-              const isActive = active === id;
+              const isActive = active === id || (id === "projects" && active === "stack") || (id === "contact" && active === "credentials");
               return (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "label relative inline-flex items-baseline gap-1.5 py-2 whitespace-nowrap transition-colors",
+                      "label relative inline-flex items-baseline py-2 whitespace-nowrap transition-colors duration-200",
                       isActive ? "text-fg" : "text-muted hover:text-fg",
                     )}
                   >
-                    <span className="tnum text-accent">{item.index}</span>
                     {item.label}
-                    <span
-                      aria-hidden="true"
-                      className={cn("absolute inset-x-0 -bottom-px h-px bg-fg transition-opacity duration-200", isActive ? "opacity-100" : "opacity-0")}
-                    />
+                    {isActive ? (
+                      <motion.span
+                        aria-hidden="true"
+                        layoutId="nav-underline"
+                        className="absolute inset-x-0 -bottom-px h-px bg-fg"
+                        transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                      />
+                    ) : null}
                   </a>
                 </li>
               );
             })}
           </ul>
+          </LayoutGroup>
         </nav>
 
         <div className="flex items-center gap-2">

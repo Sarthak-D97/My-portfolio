@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { MotionConfig } from "motion/react";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 import { headScript } from "@/lib/head-script";
 import { site } from "@/data/profile";
@@ -90,12 +91,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="label sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-fg focus:px-3 focus:py-2 focus:text-bg">
           Skip to content
         </a>
-        <Nav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <RevealObserver />
+        <MotionConfig reducedMotion="user">
+          <Nav />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <RevealObserver />
+        </MotionConfig>
       </body>
     </html>
   );

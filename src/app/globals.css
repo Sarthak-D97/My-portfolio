@@ -99,16 +99,17 @@
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Fluid type scale: clamp only, no breakpoint jumps. */
-  --text-display-xl: clamp(2.75rem, 1.4rem + 5.8vw, 7rem);
-  --text-display-xl--line-height: 0.95;
-  --text-display-xl--letter-spacing: -0.015em;
-  --text-display-lg: clamp(2.25rem, 1.4rem + 3vw, 4.5rem);
-  --text-display-lg--line-height: 1.02;
-  --text-display-lg--letter-spacing: -0.01em;
+  --text-display-xl: clamp(2.75rem, 1.5rem + 4.6vw, 5.5rem);
+  --text-display-xl--line-height: 1.04;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-lg: clamp(2.125rem, 1.3rem + 2.8vw, 4rem);
+  --text-display-lg--line-height: 1.06;
+  --text-display-lg--letter-spacing: -0.015em;
   --text-display-md: clamp(1.625rem, 1.2rem + 1.2vw, 2.5rem);
   --text-display-md--line-height: 1.1;
-  --text-lede: clamp(1.375rem, 1.1rem + 1.1vw, 2rem);
-  --text-lede--line-height: 1.3;
+  --text-lede: clamp(1.25rem, 1rem + 0.6vw, 1.5rem);
+  --text-lede--line-height: 1.45;
+  --text-lede--letter-spacing: -0.01em;
   --text-metric: clamp(2.75rem, 1.5rem + 3.5vw, 4.75rem);
   --text-metric--line-height: 1;
   --text-ghost: clamp(5rem, 14vw, 13rem);
@@ -181,9 +182,10 @@
    ------------------------------------------------------------------ */
 @layer components {
   /* Display sizes always carry the serif, whatever element they sit on (h1–h3 get it from base). */
-  .text-display-xl, .text-display-lg, .text-display-md, .text-lede, .text-metric {
+  .text-display-xl, .text-display-lg, .text-display-md, .text-metric {
     font-family: var(--font-serif);
   }
+  .text-lede { font-family: var(--font-sans); }
   /* Mono label: 12px uppercase, tracking .12em (running heads, captions, nav). */
   .label {
     font-family: var(--font-mono);
@@ -208,16 +210,6 @@
     height: 1px;
     width: 100%;
     background: var(--border);
-  }
-  /* Decorative section numeral. Always aria-hidden, never real content. */
-  .ghost {
-    position: absolute;
-    font-family: var(--font-serif);
-    font-size: clamp(5rem, 14vw, 13rem);
-    line-height: 1;
-    color: var(--border);
-    user-select: none;
-    pointer-events: none;
   }
   /* Ink underline: 1px line that thickens to 2px on hover. Never colour-only. */
   .link-ink {
@@ -276,7 +268,8 @@
   to { opacity: 1; }
 }
 
-/* Hero mount reveal: each element sets --d (delay). */
+/* Hero mount reveal: each element sets --d (delay). Masks get vertical room so serif extenders are not cropped. */
+.hero-mask { overflow: hidden; padding-block: 0.12em; margin-block: -0.12em; }
 .hero-line { animation: line-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0s); will-change: transform; }
 .hero-fade { animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0s); }
 .hero-fade-in { animation: fade-in 0.8s ease both; animation-delay: var(--d, 0s); }
@@ -286,22 +279,75 @@
    runs, everything is visible. background-color is included so row hover tints keep their easing. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
-  transition-delay: var(--d, 0s), var(--d, 0s), 0s;
+  transform: translateY(18px);
+  filter: blur(6px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease;
+  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s;
 }
 .js [data-reveal][data-in] {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-line, .hero-fade, .hero-fade-in { animation: fade-in 0.2s ease both; animation-delay: 0s; will-change: auto; }
-  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js [data-reveal] { opacity: 1; transform: none; filter: none; clip-path: none; transition: none; }
+  .js .rule-draw:not([data-in])::before { transform: none; }
+  .row-rule::after { transition: none; }
+}
+
+/* Headline variant: rises out of a clipped mask instead of fading; no blur, no opacity. */
+.js [data-reveal="clip"] {
+  opacity: 1;
+  filter: none;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(0.35em);
+  transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+.js [data-reveal="clip"][data-in] {
+  clip-path: inset(-0.3em 0 -0.3em 0);
+  transform: none;
+}
+
+/* Vertical hairline that draws itself top-to-bottom when its cell enters view. */
+.rule-draw { position: relative; }
+.rule-draw::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1px;
+  background: var(--border);
+  transform-origin: top;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+}
+.js .rule-draw:not([data-in])::before { transform: scaleY(0); }
+
+/* Index rows: a 1px accent rule grows along the top edge on hover. */
+.row-rule { position: relative; }
+.row-rule::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .row-rule:hover::after,
+  .row-rule:focus-within::after { transform: scaleX(1); }
 }
 
 /* Print everything, whether or not it was scrolled into view. */
 @media print {
-  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .js [data-reveal] { opacity: 1; transform: none; filter: none; clip-path: none; transition: none; }
+  .js .rule-draw:not([data-in])::before { transform: none; }
   .hero-line, .hero-fade, .hero-fade-in { animation: none; opacity: 1; transform: none; will-change: auto; }
 }

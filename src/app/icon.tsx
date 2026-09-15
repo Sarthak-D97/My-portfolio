@@ -1,6 +1,6 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
-import { site } from "@/data/profile";
-import { ogFonts } from "@/lib/og-fonts";
 
 export const contentType = "image/png";
 
@@ -12,30 +12,26 @@ export function generateImageMetadata() {
   ];
 }
 
-/** Next 16 passes `id` as a promise (like route params). */
+const brand = path.join(process.cwd(), "src", "assets", "brand");
+const GROUND = "#343645"; // the slate ground lireons.com uses behind its own favicon
+
+async function dataUrl(file: string) {
+  const buf = await readFile(path.join(brand, file));
+  return `data:image/png;base64,${buf.toString("base64")}`;
+}
+
+/** Next 16 passes `id` as a promise (like route params). Renders the Lireons mark as the site icon. */
 export default async function Icon({ id }: { id: string | Promise<string> }) {
   const px = (await id) === "512" ? 512 : 64;
-  const fonts = (await ogFonts()).filter((f) => f.name === "Instrument Serif" && f.style === "normal");
+  // 64px: downscale the official 144px favicon (already composed on its ground).
+  // 512px: compose the full-resolution transparent logo on the same ground so it stays crisp.
+  const src = await dataUrl(px === 512 ? "lireons-logo-1563.png" : "lireons-icon-144.png");
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#0b0b0a",
-          color: "#f2f0eb",
-          border: `${Math.round(px / 32)}px solid #f2f0eb`,
-          fontFamily: "Instrument Serif",
-          fontSize: Math.round(px * 0.6),
-          letterSpacing: "-0.02em",
-        }}
-      >
-        {site.initials}
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: GROUND }}>
+        <img src={src} width={px} height={px} alt="" style={{ width: px, height: px, objectFit: "cover" }} />
       </div>
     ),
-    { width: px, height: px, fonts },
+    { width: px, height: px },
   );
 }

@@ -223,6 +223,8 @@ export type Project = {
   /** Text shown in the arrow column, defaults to "↗". */
   arrow?: string;
   external?: boolean;
+  /** Real screenshot under /public used for the desktop hover preview (decorative). */
+  preview?: string;
 };
 
 export const projects: Project[] = [
@@ -235,6 +237,7 @@ export const projects: Project[] = [
     href: "#lireons",
     arrow: "↑ 04",
     external: false,
+    preview: "/projects/lireons-preview.jpg",
   },
   {
     index: "02",
@@ -245,6 +248,7 @@ export const projects: Project[] = [
     type: "Full stack",
     href: "https://newswallah2.vercel.app",
     external: true,
+    preview: "/projects/newswallah.jpg",
   },
   {
     index: "03",
@@ -263,6 +267,7 @@ export const projects: Project[] = [
     type: "Full stack",
     href: "https://hollydaff.vercel.app",
     external: true,
+    preview: "/projects/hollydaff.jpg",
   },
   {
     index: "05",

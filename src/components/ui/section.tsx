@@ -13,63 +13,74 @@ type SectionProps = {
   children: ReactNode;
   className?: string;
   /** Padding preset. */
-  size?: "default" | "large";
+  size?: "compact" | "default" | "large";
+};
+
+const padding = {
+  compact: "py-[clamp(4rem,8vw,7rem)]",
+  default: "py-[clamp(5rem,10vw,9rem)]",
+  large: "py-[clamp(6rem,12vw,12rem)]",
 };
 
 /**
- * A numbered section: 1px rule on top, mono running head ("03 / Experience" — note),
- * and an oversized ghost numeral behind the title (decorative, aria-hidden).
+ * A numbered section: 1px rule on top and a running head — a small serif figure,
+ * the mono label, and an optional note on the right.
  */
 export function Section({ id, index, label, note, children, className, size = "default" }: SectionProps) {
   return (
-    <section
-      id={id}
-      aria-labelledby={`${id}-title`}
-      className={cn(
-        "relative scroll-mt-14 border-t border-border",
-        size === "default" ? "py-[clamp(5rem,10vw,10rem)]" : "py-[clamp(6rem,12vw,12.5rem)]",
-        className,
-      )}
-    >
-      <Container className="relative">
-        <span className="ghost -top-8 -left-1 sm:-top-10" aria-hidden="true">
-          {index}
-        </span>
-        <div className="label relative z-[1] flex items-baseline justify-between gap-4 text-muted">
-          <span>
-            <span className="text-accent">{index}</span>
-            <span className="mx-2 text-border-strong">/</span>
-            {label}
-          </span>
-          {note ? <span className="hidden text-right sm:inline">{note}</span> : null}
-        </div>
-        <div className="relative z-[1]">{children}</div>
+    <section id={id} aria-labelledby={`${id}-title`} className={cn("relative scroll-mt-14 border-t border-border", padding[size], className)}>
+      <Container>
+        <RunningHead index={index} label={label} note={note} />
+        {children}
       </Container>
     </section>
   );
 }
 
-/** Section title: serif, size only, with exactly one italic accent word appended. */
+export function RunningHead({ index, label, note, className }: { index: string; label: string; note?: string; className?: string }) {
+  return (
+    <div className={cn("flex items-baseline justify-between gap-4", className)}>
+      <span className="flex items-baseline gap-3">
+        <span className="tnum font-serif text-[1.75rem] leading-none text-fg" aria-hidden="true">
+          {index}
+        </span>
+        <span className="label text-muted">
+          <span className="text-border-strong" aria-hidden="true">
+            /{" "}
+          </span>
+          {label}
+        </span>
+      </span>
+      {note ? <span className="label hidden text-muted sm:inline">{note}</span> : null}
+    </div>
+  );
+}
+
+/**
+ * Section title: serif, size only. Rises out of a clipped mask when the section enters view.
+ * `accent` is reserved for the two bookend headlines (hero and contact); everything else sets plain.
+ */
 export function SectionTitle({
   id,
-  lead,
+  children,
   accent,
-  trail,
   className,
 }: {
   id: string;
-  /** The words before the accent word. */
-  lead: string;
-  /** The single italic word (with its punctuation) rendered in the accent colour. */
-  accent: string;
-  /** Optional words after the accent word. */
-  trail?: string;
+  children: ReactNode;
+  /** The single italic word (with punctuation) rendered in the accent colour, appended after children. */
+  accent?: string;
   className?: string;
 }) {
   return (
-    <h2 id={`${id}-title`} className={cn("mt-8 max-w-[18ch] text-display-lg text-fg sm:mt-12", className)}>
-      {lead} <em className="em-accent">{accent}</em>
-      {trail ? ` ${trail}` : null}
+    <h2 id={`${id}-title`} data-reveal="clip" className={cn("mt-8 max-w-[20ch] text-display-lg text-fg sm:mt-10", className)}>
+      {children}
+      {accent ? (
+        <>
+          {" "}
+          <em className="em-accent">{accent}</em>
+        </>
+      ) : null}
     </h2>
   );
 }

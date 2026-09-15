@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { Container } from "@/components/ui/container";
 import { Clock } from "@/components/ui/clock";
 import { ExternalLink } from "@/components/ui/external-link";
+import { Magnetic } from "@/components/ui/magnetic";
 import { hero, site } from "@/data/profile";
 
 const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
@@ -23,9 +24,9 @@ export function Hero() {
         {/* Row 2 — statement + dossier */}
         <div className="grid gap-x-6 gap-y-10 lg:grid-cols-12">
           <div className="mt-[clamp(2.5rem,6vw,5.5rem)] lg:col-span-8">
-            <h1 id="hero-title" className="text-display-xl text-fg lg:max-w-[12ch]">
+            <h1 id="hero-title" className="text-display-xl text-fg">
               {hero.lines.map((line, i) => (
-                <span key={line} className="block overflow-hidden">
+                <span key={line} className="hero-mask block">
                   <span className="hero-line block" style={delay(0.05 + i * 0.08)}>
                     {line.includes(hero.accentWord) ? (
                       <>
@@ -47,23 +48,27 @@ export function Hero() {
 
             <div className="hero-fade mt-8" style={delay(0.45)}>
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={hero.primaryCta.href}
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-btn border border-fg bg-fg px-5 font-sans text-[0.9375rem] font-semibold text-bg transition-colors hover:border-accent hover:bg-accent hover:text-accent-fg sm:w-auto"
-                >
-                  {hero.primaryCta.label}
-                  <span className="font-mono" aria-hidden="true">
-                    ↓
-                  </span>
-                </a>
-                <a
-                  href={hero.secondaryCta.href}
-                  download
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-btn border border-fg/40 px-5 font-sans text-[0.9375rem] font-semibold text-fg transition-colors hover:border-fg sm:w-auto"
-                >
-                  {hero.secondaryCta.label}
-                  <span className="meta border-l border-border-strong pl-2 text-muted">PDF</span>
-                </a>
+                <Magnetic className="w-full sm:w-auto">
+                  <a
+                    href={hero.primaryCta.href}
+                    className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-btn border border-fg bg-fg px-5 font-sans text-[0.9375rem] font-semibold text-bg transition-colors hover:border-accent hover:bg-accent hover:text-accent-fg sm:w-auto"
+                  >
+                    {hero.primaryCta.label}
+                    <span className="font-mono transition-transform duration-300 ease-out motion-safe:group-hover:translate-y-0.5" aria-hidden="true">
+                      ↓
+                    </span>
+                  </a>
+                </Magnetic>
+                <Magnetic className="w-full sm:w-auto">
+                  <a
+                    href={hero.secondaryCta.href}
+                    download
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-btn border border-fg/40 px-5 font-sans text-[0.9375rem] font-semibold text-fg transition-colors hover:border-fg sm:w-auto"
+                  >
+                    {hero.secondaryCta.label}
+                    <span className="meta border-l border-border-strong pl-2 text-muted">PDF</span>
+                  </a>
+                </Magnetic>
               </div>
               <p className="meta mt-4 text-muted">
                 or write to{" "}
@@ -147,9 +152,6 @@ export function Hero() {
           </aside>
         </div>
 
-        <span className="ghost right-0 bottom-2 hidden lg:block" aria-hidden="true">
-          01
-        </span>
       </Container>
     </section>
   );

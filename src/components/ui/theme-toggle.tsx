@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ const getServerSnapshot = (): Theme => "dark";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const reduce = useReducedMotion();
 
   function toggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -35,19 +37,38 @@ export function ThemeToggle({ className }: { className?: string }) {
     } catch {}
   }
 
+  const isDark = theme === "dark";
+
   return (
     <button
       type="button"
       onClick={toggle}
       aria-label="Dark theme"
-      aria-pressed={theme === "dark"}
+      aria-pressed={isDark}
       className={cn(
-        "inline-flex size-10 items-center justify-center border border-border text-fg transition-colors hover:border-accent hover:text-accent",
+        "relative inline-flex size-10 items-center justify-center overflow-hidden border border-border text-fg transition-colors hover:border-accent hover:text-accent",
         className,
       )}
     >
-      <Sun aria-hidden="true" className="size-4 dark:hidden" />
-      <Moon aria-hidden="true" className="hidden size-4 dark:block" />
+      {/* The two icons rotate through the button like a dial; reduced motion swaps instantly. */}
+      <motion.span
+        aria-hidden="true"
+        className="absolute inset-0 grid place-items-center"
+        initial={false}
+        animate={{ rotate: isDark ? 0 : 90, opacity: isDark ? 1 : 0, scale: isDark ? 1 : 0.6 }}
+        transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 320, damping: 24 }}
+      >
+        <Moon className="size-4" />
+      </motion.span>
+      <motion.span
+        aria-hidden="true"
+        className="absolute inset-0 grid place-items-center"
+        initial={false}
+        animate={{ rotate: isDark ? -90 : 0, opacity: isDark ? 0 : 1, scale: isDark ? 0.6 : 1 }}
+        transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 320, damping: 24 }}
+      >
+        <Sun className="size-4" />
+      </motion.span>
     </button>
   );
 }
