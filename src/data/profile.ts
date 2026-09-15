@@ -121,7 +121,7 @@ export const experience: Experience[] = [
     current: true,
     role: "Lead Full Stack Engineer",
     company: "Physics Wallah · IOI LeapX",
-    href: "https://pwioi.com",
+    href: "https://pwleapx.com/",
     summary: "Lead a 12-person unit (7 full-time) across 12 parallel client engagements; 10+ Next.js and NestJS applications shipped.",
     stack: "TypeScript · NestJS · FastAPI · Express · Next.js · PostgreSQL · Docker · AWS · GitHub Actions",
     bullets: [
